@@ -22,6 +22,8 @@ allprojects {
     }
 }
 
+apply from: 'dependencies_versions.gradle'
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

@@ -1,0 +1,14 @@
+ext {
+    //Android
+    androidBuildToolsVersion = "27.0.0"
+    androidMinSdkVersion = 21
+    androidTargetSdkVersion = 27
+    androidCompileSdkVersion = 27
+    kotlinVersion = '1.2.10'
+
+    //Libraries
+    supportLibraryVersion = '27.0.0'
+    rxJavaVersion = '2.0.2'
+    javaxAnnotationVersion = '1.0'
+    javaxInjectVersion = '1'
+}
