@@ -26,23 +26,23 @@ class GetBookmarkedProjectsTest {
 
 
     @Test
-    fun getProjectsCompletes() {
-        stubGetProjects(Observable.just(ProjectDataFactory.makeProjectList(3)))
+    fun getBookmarkedProjectsCompletes() {
+        stubGetBookmarkedProjects(Observable.just(ProjectDataFactory.makeProjectList(3)))
         val testObserver = getBookmarkedProjects.buildUseCaseObservable().test()
         testObserver.assertComplete()
     }
 
 
     @Test
-    fun getProjectsReturnsData() {
+    fun getBookmarkedProjectsReturnsData() {
         val projects = ProjectDataFactory.makeProjectList(3)
-        stubGetProjects(Observable.just(projects))
+        stubGetBookmarkedProjects(Observable.just(projects))
         val testObserver = getBookmarkedProjects.buildUseCaseObservable().test()
         testObserver.assertValue(projects)
     }
 
 
-    private fun stubGetProjects(observable: Observable<List<Project>>) {
+    private fun stubGetBookmarkedProjects(observable: Observable<List<Project>>) {
         whenever(projectsRepository.getBookmarkedProjects())
                 .thenReturn(observable)
     }
