@@ -36,7 +36,7 @@ class UnbookmarkProjectTest {
 
 
     @Test(expected = IllegalArgumentException::class)
-    fun unbookmarkProjectThrowsException() {
+    fun unbookmarkProjectThrowsExceptionIfNoParamsPassed() {
         unbookmarkProject.buildUseCaseCompletable().test()
     }
 
