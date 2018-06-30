@@ -7,15 +7,15 @@ import ru.artempugachev.domain.repository.ProjectsRepository
 import javax.inject.Inject
 
 
-class BookmarkProject @Inject constructor(
+class UnbookmarkProject @Inject constructor(
         private val projectsRepository: ProjectsRepository,
         postExecutionThread: PostExecutionThread)
-    : CompletableUseCase<BookmarkProject.Params>(postExecutionThread) {
+    : CompletableUseCase<UnbookmarkProject.Params>(postExecutionThread){
 
 
     public override fun buildUseCaseCompletable(params: Params?): Completable {
         if (params == null) throw IllegalArgumentException("Params can't be null!")
-        return projectsRepository.bookmarkProject(params.projectId)
+        return projectsRepository.unbookmarkProject(params.projectId)
     }
 
 
@@ -26,4 +26,5 @@ class BookmarkProject @Inject constructor(
             }
         }
     }
+
 }
