@@ -1,4 +1,5 @@
 apply plugin: 'java-library'
+apply plugin: 'kotlin'
 
 dependencies {
     def domainDependencies = rootProject.ext.domainDependencies
@@ -11,8 +12,31 @@ dependencies {
     testImplementation domainTestDependencies.junit
     testImplementation domainTestDependencies.mockito
     testImplementation domainTestDependencies.assertj
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
 }
 
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
+buildscript {
+    ext.kotlin_version = '1.2.50'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+repositories {
+    mavenCentral()
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
