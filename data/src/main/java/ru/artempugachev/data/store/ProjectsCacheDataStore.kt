@@ -7,7 +7,7 @@ import ru.artempugachev.data.repository.ProjectsCache
 import ru.artempugachev.data.repository.ProjectsDataStore
 import javax.inject.Inject
 
-class ProjectsCacheDataStore @Inject constructor(private val projectsCache: ProjectsCache):
+open class ProjectsCacheDataStore @Inject constructor(private val projectsCache: ProjectsCache):
         ProjectsDataStore {
 
     override fun getProjects(): Observable<List<ProjectEntity>> {
