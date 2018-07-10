@@ -40,6 +40,19 @@ class ProjectsDataRepositoryTest {
 
 
     @Test
+    fun getProjectsReturnsData() {
+        val projectEntity = ProjectFactory.makeProjectEntity()
+        val project = ProjectFactory.makeProject()
+
+        stubGetProjects(Observable.just(listOf(projectEntity)))
+        stubMapper(project, projectEntity)
+
+        val testObserver = repository.getProjects().test()
+        testObserver.assertValue(listOf(project))
+    }
+
+
+    @Test
     fun getProjectsComplete() {
         stubGetProjects(Observable.just(listOf(ProjectFactory.makeProjectEntity())))
         stubMapper(ProjectFactory.makeProject(), any())

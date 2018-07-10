@@ -10,7 +10,7 @@ import ru.artempugachev.domain.model.Project
 import ru.artempugachev.domain.repository.ProjectsRepository
 import javax.inject.Inject
 
-class ProjectsDataRepository @Inject constructor(
+open class ProjectsDataRepository @Inject constructor(
         private val mapper: ProjectMapper,
         private val cache: ProjectsCache,
         private val factory: ProjectsDataStoreFactory)
