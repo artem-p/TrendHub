@@ -15,6 +15,7 @@ import ru.artempugachev.data.model.ProjectEntity
 import ru.artempugachev.data.repository.ProjectsCache
 import ru.artempugachev.data.repository.ProjectsDataStore
 import ru.artempugachev.data.store.ProjectsDataStoreFactory
+import ru.artempugachev.data.test.factory.DataFactory
 import ru.artempugachev.data.test.factory.ProjectFactory
 import ru.artempugachev.domain.model.Project
 
@@ -36,6 +37,8 @@ class ProjectsDataRepositoryTest {
         stubIsCacheExpired(Single.just(false))
         stubAreProjectsCached(Single.just(false))
         stubSaveProjects(Completable.complete())
+        stubBookmarkProject(Completable.complete())
+        stubUnBookmarkProject(Completable.complete())
     }
 
 
@@ -84,6 +87,25 @@ class ProjectsDataRepositoryTest {
         testObserver.assertValue(listOf(project))
     }
 
+
+    @Test
+    fun bookmarkProjectsCompletes() {
+        stubBookmarkProject(Completable.complete())
+
+        val testObserver = repository.bookmarkProject(DataFactory.randomString())
+//        testObserver.assertComplete()
+    }
+
+
+    private fun stubBookmarkProject(completable: Completable) {
+        whenever(cache.setProjectAsBookmarked(any()))
+                .thenReturn(completable)
+    }
+
+    private fun stubUnBookmarkProject(completable: Completable) {
+        whenever(cache.setProjectAsNotBookmarked(any()))
+                .thenReturn(completable)
+    }
 
 
     private fun stubIsCacheExpired(isExpired: Single<Boolean>) {
