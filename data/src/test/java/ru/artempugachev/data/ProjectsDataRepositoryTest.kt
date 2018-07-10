@@ -37,8 +37,6 @@ class ProjectsDataRepositoryTest {
         stubIsCacheExpired(Single.just(false))
         stubAreProjectsCached(Single.just(false))
         stubSaveProjects(Completable.complete())
-        stubBookmarkProject(Completable.complete())
-        stubUnBookmarkProject(Completable.complete())
     }
 
 
