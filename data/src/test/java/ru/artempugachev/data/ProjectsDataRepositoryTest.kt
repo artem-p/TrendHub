@@ -3,7 +3,9 @@ package ru.artempugachev.data
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
+import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,6 +32,10 @@ class ProjectsDataRepositoryTest {
     @Before
     fun setUp() {
         stubFactoryGetDataStore()
+        stubFactoryGetCacheDataStore()
+        stubIsCacheExpired(Single.just(false))
+        stubAreProjectsCached(Single.just(false))
+        stubSaveProjects(Completable.complete())
     }
 
 
@@ -40,6 +46,18 @@ class ProjectsDataRepositoryTest {
 
         val testObserver = repository.getProjects().test()
         testObserver.assertComplete()
+    }
+
+
+    private fun stubIsCacheExpired(isExpired: Single<Boolean>) {
+        whenever(cache.isProjectsCacheExpired())
+                .thenReturn(isExpired)
+    }
+
+
+    private fun stubAreProjectsCached(areProjectsCached: Single<Boolean>) {
+        whenever(cache.areProjectsCached())
+                .thenReturn(areProjectsCached)
     }
 
 
@@ -58,6 +76,18 @@ class ProjectsDataRepositoryTest {
     private fun stubFactoryGetDataStore() {
         whenever(factory.getDataStore(any(), any()))
                 .thenReturn(store)
+    }
+
+
+    private fun stubFactoryGetCacheDataStore() {
+        whenever(factory.getCacheDataStore())
+                .thenReturn(store)
+    }
+
+
+    private fun stubSaveProjects(completable: Completable) {
+        whenever(store.saveProjects(any()))
+                .thenReturn(completable)
     }
 
 }
