@@ -40,6 +40,16 @@ class ProjectsDataRepositoryTest {
 
 
     @Test
+    fun getProjectsComplete() {
+        stubGetProjects(Observable.just(listOf(ProjectFactory.makeProjectEntity())))
+        stubMapper(ProjectFactory.makeProject(), any())
+
+        val testObserver = repository.getProjects().test()
+        testObserver.assertComplete()
+    }
+
+
+    @Test
     fun getProjectsReturnsData() {
         val projectEntity = ProjectFactory.makeProjectEntity()
         val project = ProjectFactory.makeProject()
@@ -53,11 +63,11 @@ class ProjectsDataRepositoryTest {
 
 
     @Test
-    fun getProjectsComplete() {
-        stubGetProjects(Observable.just(listOf(ProjectFactory.makeProjectEntity())))
+    fun getBookmarkedProjectsComplete() {
+        stubGetBookmarkedProjects(Observable.just(listOf(ProjectFactory.makeProjectEntity())))
         stubMapper(ProjectFactory.makeProject(), any())
 
-        val testObserver = repository.getProjects().test()
+        val testObserver = repository.getBookmarkedProjects().test()
         testObserver.assertComplete()
     }
 
@@ -82,6 +92,11 @@ class ProjectsDataRepositoryTest {
 
     private fun stubGetProjects(observable: Observable<List<ProjectEntity>>) {
         whenever(store.getProjects())
+                .thenReturn(observable)
+    }
+
+    private fun stubGetBookmarkedProjects(observable: Observable<List<ProjectEntity>>) {
+        whenever(store.getBookmarkedProjects())
                 .thenReturn(observable)
     }
 
