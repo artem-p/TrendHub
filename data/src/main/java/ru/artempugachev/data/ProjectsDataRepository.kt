@@ -38,8 +38,6 @@ open class ProjectsDataRepository @Inject constructor(
     }
 
     override fun bookmarkProject(projectId: String): Completable {
-        val store = factory.getCacheDataStore()
-        val completable = store.setProjectAsBookmarked(projectId)
         return factory.getCacheDataStore().setProjectAsBookmarked(projectId)
     }
 

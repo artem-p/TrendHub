@@ -14,6 +14,7 @@ import ru.artempugachev.data.mapper.ProjectMapper
 import ru.artempugachev.data.model.ProjectEntity
 import ru.artempugachev.data.repository.ProjectsCache
 import ru.artempugachev.data.repository.ProjectsDataStore
+import ru.artempugachev.data.store.ProjectsCacheDataStore
 import ru.artempugachev.data.store.ProjectsDataStoreFactory
 import ru.artempugachev.data.test.factory.DataFactory
 import ru.artempugachev.data.test.factory.ProjectFactory
@@ -90,13 +91,13 @@ class ProjectsDataRepositoryTest {
     fun bookmarkProjectsCompletes() {
         stubBookmarkProject(Completable.complete())
 
-        val testObserver = repository.bookmarkProject(DataFactory.randomString())
-//        testObserver.assertComplete()
+        val testObserver = repository.bookmarkProject(DataFactory.randomString()).test()
+        testObserver.assertComplete()
     }
 
 
     private fun stubBookmarkProject(completable: Completable) {
-        whenever(cache.setProjectAsBookmarked(any()))
+        whenever(store.setProjectAsBookmarked(any()))
                 .thenReturn(completable)
     }
 
