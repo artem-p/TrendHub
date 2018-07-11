@@ -96,13 +96,22 @@ class ProjectsDataRepositoryTest {
     }
 
 
+    @Test
+    fun unBookmarkProjectsCompletes() {
+        stubUnBookmarkProject(Completable.complete())
+
+        val testObserver = repository.unbookmarkProject(DataFactory.randomString()).test()
+        testObserver.assertComplete()
+    }
+
+
     private fun stubBookmarkProject(completable: Completable) {
         whenever(store.setProjectAsBookmarked(any()))
                 .thenReturn(completable)
     }
 
     private fun stubUnBookmarkProject(completable: Completable) {
-        whenever(cache.setProjectAsNotBookmarked(any()))
+        whenever(store.setProjectAsNotBookmarked(any()))
                 .thenReturn(completable)
     }
 
