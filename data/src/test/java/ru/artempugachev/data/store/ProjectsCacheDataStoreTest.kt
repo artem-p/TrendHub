@@ -1,6 +1,7 @@
 package ru.artempugachev.data.store
 
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
 import org.junit.Test
@@ -24,6 +25,27 @@ class ProjectsCacheDataStoreTest {
 
         testObserver.assertComplete()
     }
+
+
+    @Test
+    fun getProjectsReturnsData() {
+        val data = listOf(ProjectFactory.makeProjectEntity())
+        stubProjectsCacheGetProjects(Observable.just(data))
+
+        val testObserver = store.getProjects().test()
+
+        testObserver.assertValue(data)
+    }
+
+
+    @Test
+    fun getProjectsCallsCacheSource() {
+        stubProjectsCacheGetProjects(Observable.just(listOf(ProjectFactory.makeProjectEntity())))
+        store.getProjects()
+
+        verify(cache).getProjects()
+    }
+
 
     fun stubProjectsCacheGetProjects(observable: Observable<List<ProjectEntity>>) {
         whenever(cache.getProjects())
