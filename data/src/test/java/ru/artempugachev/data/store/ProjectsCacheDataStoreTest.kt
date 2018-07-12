@@ -1,8 +1,10 @@
 package ru.artempugachev.data.store
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
+import io.reactivex.Completable
 import io.reactivex.Observable
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -47,8 +49,42 @@ class ProjectsCacheDataStoreTest {
     }
 
 
-    fun stubProjectsCacheGetProjects(observable: Observable<List<ProjectEntity>>) {
+    @Test
+    fun saveProjectsCompletes() {
+        stubSaveProjects(Completable.complete())
+        stubProjectsCacheSetLastCacheTime(Completable.complete())
+
+        val testObserver = store.saveProjects(listOf(ProjectFactory.makeProjectEntity())).test()
+
+        testObserver.assertComplete()
+    }
+
+
+    @Test
+    fun saveProjectsCallsCache() {
+        stubSaveProjects(Completable.complete())
+        stubProjectsCacheSetLastCacheTime(Completable.complete())
+
+        store.saveProjects(listOf(ProjectFactory.makeProjectEntity()))
+
+        verify(cache).saveProjects(any())
+    }
+
+
+    private fun stubProjectsCacheGetProjects(observable: Observable<List<ProjectEntity>>) {
         whenever(cache.getProjects())
                 .thenReturn(observable)
+    }
+
+
+    private fun stubSaveProjects(completable: Completable) {
+        whenever(cache.saveProjects(any()))
+                .thenReturn(completable)
+    }
+
+
+    private fun stubProjectsCacheSetLastCacheTime(completable: Completable) {
+        whenever(cache.setLastCacheTime(any()))
+                .thenReturn(completable)
     }
 }
