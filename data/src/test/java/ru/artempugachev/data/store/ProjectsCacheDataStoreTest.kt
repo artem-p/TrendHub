@@ -87,4 +87,10 @@ class ProjectsCacheDataStoreTest {
         whenever(cache.setLastCacheTime(any()))
                 .thenReturn(completable)
     }
+
+
+    private fun stubProjectsClearProjects(completable: Completable) {
+        whenever(cache.clearProjects())
+                .thenReturn(completable)
+    }
 }
