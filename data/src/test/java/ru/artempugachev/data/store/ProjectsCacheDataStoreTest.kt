@@ -11,6 +11,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import ru.artempugachev.data.model.ProjectEntity
 import ru.artempugachev.data.repository.ProjectsCache
+import ru.artempugachev.data.test.factory.DataFactory
 import ru.artempugachev.data.test.factory.ProjectFactory
 
 
@@ -99,12 +100,61 @@ class ProjectsCacheDataStoreTest {
 
 
     @Test
+    fun getBookmarkedProjectsCallsCache() {
+        stubGetBookmarkedProjects(Observable.just(listOf(ProjectFactory.makeProjectEntity())))
+
+        store.getBookmarkedProjects()
+        verify(cache).getBookmarkedProjects()
+    }
+
+
+    @Test
     fun getBookmarkedProjectsReturnsData() {
         val data = listOf(ProjectFactory.makeProjectEntity())
         stubGetBookmarkedProjects(Observable.just(data))
 
         val testObserver = store.getBookmarkedProjects().test()
         testObserver.assertValue(data)
+    }
+
+
+    @Test
+    fun setProjectsAsBookmarkedCompletes() {
+        stubSetProjectAsBookmarked(Completable.complete())
+
+        val testObserver = store.setProjectAsBookmarked(DataFactory.randomString()).test()
+        testObserver.assertComplete()
+    }
+
+
+    @Test
+    fun setProjectsAsBookmarkedCallsCacheStore() {
+        val projectId = DataFactory.randomString()
+
+        stubSetProjectAsBookmarked(Completable.complete())
+        store.setProjectAsBookmarked(projectId)
+
+        verify(cache).setProjectAsBookmarked(projectId)
+    }
+
+
+    @Test
+    fun setProjectsAsNotBookmarkedCompletes() {
+        stubSetProjectAsNotBookmarked(Completable.complete())
+
+        val testObserver = store.setProjectAsNotBookmarked(DataFactory.randomString()).test()
+        testObserver.assertComplete()
+    }
+
+
+    @Test
+    fun setProjectsAsNotBookmarkedCallsCacheStore() {
+        val projectId = DataFactory.randomString()
+
+        stubSetProjectAsNotBookmarked(Completable.complete())
+        store.setProjectAsNotBookmarked(projectId)
+
+        verify(cache).setProjectAsNotBookmarked(projectId)
     }
 
     /**
@@ -139,4 +189,17 @@ class ProjectsCacheDataStoreTest {
         whenever(cache.getBookmarkedProjects())
                 .thenReturn(observable)
     }
+
+
+    private fun stubSetProjectAsBookmarked(completable: Completable) {
+        whenever(cache.setProjectAsBookmarked(any()))
+                .thenReturn(completable)
+    }
+
+
+    private fun stubSetProjectAsNotBookmarked(completable: Completable) {
+        whenever(cache.setProjectAsNotBookmarked(any()))
+                .thenReturn(completable)
+    }
+
 }
