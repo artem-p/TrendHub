@@ -89,6 +89,28 @@ class ProjectsCacheDataStoreTest {
     }
 
 
+    @Test
+    fun getBookmarkedProjectsCompletes() {
+        stubGetBookmarkedProjects(Observable.just(listOf(ProjectFactory.makeProjectEntity())))
+
+        val testObserver = store.getBookmarkedProjects().test()
+        testObserver.assertComplete()
+    }
+
+
+    @Test
+    fun getBookmarkedProjectsReturnsData() {
+        val data = listOf(ProjectFactory.makeProjectEntity())
+        stubGetBookmarkedProjects(Observable.just(data))
+
+        val testObserver = store.getBookmarkedProjects().test()
+        testObserver.assertValue(data)
+    }
+
+    /**
+     * Stub methods
+     * */
+
     private fun stubProjectsCacheGetProjects(observable: Observable<List<ProjectEntity>>) {
         whenever(cache.getProjects())
                 .thenReturn(observable)
@@ -110,5 +132,11 @@ class ProjectsCacheDataStoreTest {
     private fun stubProjectsClearProjects(completable: Completable) {
         whenever(cache.clearProjects())
                 .thenReturn(completable)
+    }
+
+
+    private fun stubGetBookmarkedProjects(observable: Observable<List<ProjectEntity>>) {
+        whenever(cache.getBookmarkedProjects())
+                .thenReturn(observable)
     }
 }
