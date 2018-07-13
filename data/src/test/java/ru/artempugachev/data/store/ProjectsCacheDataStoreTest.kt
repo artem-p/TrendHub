@@ -71,6 +71,24 @@ class ProjectsCacheDataStoreTest {
     }
 
 
+    @Test
+    fun clearProjectsCompletes() {
+        stubProjectsClearProjects(Completable.complete())
+
+        val testObserver = store.clearProjects().test()
+        testObserver.assertComplete()
+    }
+
+
+    @Test
+    fun clearProjectsCallsCache() {
+        stubProjectsClearProjects(Completable.complete())
+
+        store.clearProjects()
+        verify(cache).clearProjects()
+    }
+
+
     private fun stubProjectsCacheGetProjects(observable: Observable<List<ProjectEntity>>) {
         whenever(cache.getProjects())
                 .thenReturn(observable)
