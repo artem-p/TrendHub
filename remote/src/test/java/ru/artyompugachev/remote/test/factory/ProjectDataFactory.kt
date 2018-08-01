@@ -5,7 +5,7 @@ import ru.artempugachev.remote.model.OwnerModel
 import ru.artempugachev.remote.model.ProjectModel
 import ru.artempugachev.remote.model.ProjectsResponseModel
 
-class ProjectDataFactory {
+object ProjectDataFactory {
 
     fun makeOwner(): OwnerModel {
         return OwnerModel(DataFactory.randomUuid(), DataFactory.randomUuid())
