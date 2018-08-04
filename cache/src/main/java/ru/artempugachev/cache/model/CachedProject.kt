@@ -1,5 +1,6 @@
 package ru.artempugachev.cache.model
 
+import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import ru.artempugachev.cache.db.ProjectDbInfo
@@ -14,5 +15,7 @@ data class CachedProject (
     var dateCreated: String,
     var ownerName: String,
     var ownerAvatar: String,
+
+    @ColumnInfo(name = ProjectDbInfo.COLUMN_IS_BOOKMARKED)
     var isBookmarked: Boolean
 )
