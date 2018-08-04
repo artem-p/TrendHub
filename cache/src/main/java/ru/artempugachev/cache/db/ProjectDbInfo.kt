@@ -2,6 +2,7 @@ package ru.artempugachev.cache.db
 
 object ProjectDbInfo {
     const val TABLE_NAME = "projects"
+    const val CONFIG_TABLE_NAME = "projects_config"
     const val COLUMN_PROJECT_ID = "id"
     const val COLUMN_IS_BOOKMARKED = "is_bookmarked"
     const val COLUMN_NAME = "name"
