@@ -2,9 +2,9 @@ package ru.artempugachev.cache.model
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import ru.artempugachev.cache.db.ProjectDbConstants
+import ru.artempugachev.cache.db.ProjectDbInfo
 
-@Entity(tableName = ProjectDbConstants.TABLE_NAME)
+@Entity(tableName = ProjectDbInfo.TABLE_NAME)
 data class CachedProject (
     @PrimaryKey
     var id: String,

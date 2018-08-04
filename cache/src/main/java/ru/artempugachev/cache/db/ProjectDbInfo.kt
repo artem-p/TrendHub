@@ -1,6 +1,6 @@
 package ru.artempugachev.cache.db
 
-object ProjectDbConstants {
+object ProjectDbInfo {
     const val TABLE_NAME = "projects"
     const val COLUMN_PROJECT_ID = "id"
 }
