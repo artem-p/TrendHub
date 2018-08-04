@@ -1,4 +1,4 @@
-package ru.artempugachev.cache
+package ru.artempugachev.cache.db
 
 object ProjectDbContract {
     const val TABLE_NAME = "projects"

@@ -1,9 +1,8 @@
 package ru.artempugachev.cache.model
 
-import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import ru.artempugachev.cache.ProjectDbContract
+import ru.artempugachev.cache.db.ProjectDbContract
 
 @Entity(tableName = ProjectDbContract.TABLE_NAME)
 data class CachedProject (
