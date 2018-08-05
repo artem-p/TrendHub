@@ -1,6 +1,8 @@
 package ru.artempugachev.cache.dao
 
 import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import io.reactivex.Flowable
 import ru.artempugachev.cache.db.ProjectDbInfo.COLUMN_IS_BOOKMARKED
@@ -14,6 +16,10 @@ abstract class CachedProjectsDao {
 
     @Query(GET_PROJECTS)
     abstract fun getProjects(): Flowable<List<CachedProject>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @JvmSuppressWildcards
+    abstract fun insertProjects(projects: List<CachedProject>)
 
 
     @Query(DELETE_PROJECTS)

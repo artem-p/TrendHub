@@ -14,37 +14,55 @@ class ProjectsCacheImpl @Inject constructor(
         private val mapper: CachedProjectMapper)
     :ProjectsCache {
 
+
     override fun clearProjects(): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Completable.defer {
+            projectsDatabase.cachedProjectsDao().deleteProjects()
+            Completable.complete()
+        }
     }
 
+
     override fun saveProjects(projects: List<ProjectEntity>): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Completable.defer {
+            projectsDatabase.cachedProjectsDao().insertProjects(
+                    projects.map { mapper.mapToCached(it) }
+            )
+
+            Completable.complete()
+        }
     }
+
 
     override fun getProjects(): Observable<List<ProjectEntity>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+
     override fun getBookmarkedProjects(): Observable<List<ProjectEntity>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 
     override fun setProjectAsBookmarked(projectId: String): Completable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+
     override fun setProjectAsNotBookmarked(projectId: String): Completable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 
     override fun areProjectsCached(): Single<Boolean> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+
     override fun setLastCacheTime(lastCache: Long): Completable {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
+
 
     override fun isProjectsCacheExpired(): Single<Boolean> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
