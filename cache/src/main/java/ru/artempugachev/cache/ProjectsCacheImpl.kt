@@ -5,6 +5,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import ru.artempugachev.cache.db.ProjectsDatabase
 import ru.artempugachev.cache.mapper.CachedProjectMapper
+import ru.artempugachev.cache.model.Config
 import ru.artempugachev.data.model.ProjectEntity
 import ru.artempugachev.data.repository.ProjectsCache
 import javax.inject.Inject
@@ -53,26 +54,46 @@ class ProjectsCacheImpl @Inject constructor(
 
 
     override fun setProjectAsBookmarked(projectId: String): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Completable.defer {
+            projectsDatabase.cachedProjectsDao().setBookmarkStatus(true, projectId)
+            Completable.complete()
+        }
+
     }
 
 
     override fun setProjectAsNotBookmarked(projectId: String): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Completable.defer {
+            projectsDatabase.cachedProjectsDao().setBookmarkStatus(false, projectId)
+            Completable.complete()
+        }
     }
 
 
     override fun areProjectsCached(): Single<Boolean> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return projectsDatabase.cachedProjectsDao().getProjects().isEmpty
+                .map {
+                    !it
+                }
     }
 
 
     override fun setLastCacheTime(lastCache: Long): Completable {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Completable.defer {
+            projectsDatabase.configDao().insertConfig(Config(lastCacheTime = lastCache))
+            Completable.complete()
+        }
     }
 
 
     override fun isProjectsCacheExpired(): Single<Boolean> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val currentTime = System.currentTimeMillis()
+        val expirationTime = (60 * 10 * 1000).toLong()
+        return projectsDatabase.configDao().getConfig()
+                .single(Config(lastCacheTime = 0))
+                .map {
+                    currentTime - it.lastCacheTime > expirationTime
+                }
+
     }
 }
