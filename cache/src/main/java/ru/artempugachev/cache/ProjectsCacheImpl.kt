@@ -35,12 +35,20 @@ class ProjectsCacheImpl @Inject constructor(
 
 
     override fun getProjects(): Observable<List<ProjectEntity>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return projectsDatabase.cachedProjectsDao().getProjects()
+                .toObservable()
+                .map {
+                    it.map { mapper.mapFromCached(it) }
+                }
     }
 
 
     override fun getBookmarkedProjects(): Observable<List<ProjectEntity>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return projectsDatabase.cachedProjectsDao().getBookmarkedProjects()
+                .toObservable()
+                .map {
+                    it.map { mapper.mapFromCached(it) }
+                }
     }
 
 
