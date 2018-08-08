@@ -56,7 +56,8 @@ class ProjectsCacheImplTest {
     @Test
     fun getBookmarkedProjectsReturnsData() {
         val bookmarkedProject = ProjectDataFactory.makeBookmarkedProjectEntity()
-        val projects = listOf(ProjectDataFactory.makeProjectEntity(),
+        val notBookmarkedProject = ProjectDataFactory.makeNotBookmarkedProjectEntity()
+        val projects = listOf(notBookmarkedProject,
                 bookmarkedProject)
         cache.saveProjects(projects).test()
 
@@ -64,4 +65,13 @@ class ProjectsCacheImplTest {
         testObserver.assertValue(listOf(bookmarkedProject))
     }
 
+
+    @Test
+    fun setProjectAsBookmarkedCompletes() {
+        val projects = listOf(ProjectDataFactory.makeProjectEntity())
+        cache.saveProjects(projects).test()
+
+        val testObserver = cache.setProjectAsBookmarked(projects[0].id).test()
+        testObserver.assertComplete()
+    }
 }

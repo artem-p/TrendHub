@@ -37,4 +37,13 @@ object ProjectDataFactory {
                 DataFactory.randomUuid(), DataFactory.randomUuid(),
                 true)
     }
+
+    fun makeNotBookmarkedProjectEntity(): ProjectEntity {
+        return ProjectEntity(DataFactory.randomUuid(),
+                DataFactory.randomUuid(), DataFactory.randomUuid(),
+                DataFactory.randomUuid(), DataFactory.randomUuid(),
+                DataFactory.randomUuid(), DataFactory.randomUuid(),
+                false)
+    }
+
 }
