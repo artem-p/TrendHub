@@ -1,8 +1,10 @@
 package ru.artempugachev.cache
 
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers.single
 import ru.artempugachev.cache.db.ProjectsDatabase
 import ru.artempugachev.cache.mapper.CachedProjectMapper
 import ru.artempugachev.cache.model.Config
@@ -89,11 +91,11 @@ class ProjectsCacheImpl @Inject constructor(
     override fun isProjectsCacheExpired(): Single<Boolean> {
         val currentTime = System.currentTimeMillis()
         val expirationTime = (60 * 10 * 1000).toLong()
+
         return projectsDatabase.configDao().getConfig()
                 .single(Config(lastCacheTime = 0))
                 .map {
                     currentTime - it.lastCacheTime > expirationTime
                 }
-
     }
 }
