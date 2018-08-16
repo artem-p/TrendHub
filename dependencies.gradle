@@ -24,7 +24,7 @@ ext {
     //Testing
     jUnitVersion = '4.12'
     assertJVersion = '3.8.0'
-    mockitoKotlinVersion = '1.5.0'
+    mockitoKotlinVersion = '1.6.0'
     robolectricVersion = '3.4.2'
     mockitoVersion = '1.9.5'
     androidSupportRunnerVersion = '1.0.0'
