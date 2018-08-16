@@ -7,7 +7,7 @@ import ru.artempugachev.domain.model.Project
 import ru.artempugachev.domain.repository.ProjectsRepository
 import javax.inject.Inject
 
-class GetProjects @Inject constructor(
+open class GetProjects @Inject constructor(
         private val projectsRepository: ProjectsRepository,
         postExecutionThread: PostExecutionThread)
     : ObservableUseCase<List<Project>, Nothing>(postExecutionThread) {
