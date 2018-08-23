@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="project_item_height">80dp</dimen>
+    <dimen name="project_item_avatar_size">60dp</dimen>
+    <dimen name="standard_margin">8dp</dimen>
+    <dimen name="standard_double_margin">16dp</dimen>
+    <dimen name="project_item_bookmarked_image_size">40dp</dimen>
+</resources>

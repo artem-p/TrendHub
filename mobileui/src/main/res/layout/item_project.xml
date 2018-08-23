@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/project_item_height"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/image_owner_avatar"
+        android:layout_width="@dimen/project_item_avatar_size"
+        android:layout_height="@dimen/project_item_avatar_size"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:layout_marginStart="@dimen/standard_double_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.498" />
+
+    <TextView
+        android:id="@+id/text_owner_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginStart="@dimen/standard_double_margin"
+        app:layout_constraintEnd_toStartOf="@+id/image_bookmarked"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_owner_avatar"
+        app:layout_constraintTop_toTopOf="@+id/image_owner_avatar"
+        tools:text="Joe Birch" />
+
+    <TextView
+        android:id="@+id/text_project_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/standard_margin"
+        android:layout_marginRight="@dimen/standard_double_margin"
+        android:layout_marginStart="@dimen/standard_double_margin"
+        android:layout_marginTop="@dimen/standard_double_margin"
+        app:layout_constraintEnd_toStartOf="@+id/image_bookmarked"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_owner_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/text_owner_name"
+        tools:text="Some project" />
+
+    <ImageView
+        android:id="@+id/image_bookmarked"
+        android:layout_width="@dimen/project_item_bookmarked_image_size"
+        android:layout_height="@dimen/project_item_bookmarked_image_size"
+        android:layout_marginBottom="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_double_margin"
+        android:layout_marginTop="@dimen/standard_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+</android.support.constraint.ConstraintLayout>
