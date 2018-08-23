@@ -7,9 +7,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.concurrent.TimeUnit
 
 
-class GithubTrendingServiceFactory {
-
-     // todo add Dagger here
+object GithubTrendingServiceFactory {
 
 
     fun makeGithubTrendingService(isDebug: Boolean): GithubTrendingService {

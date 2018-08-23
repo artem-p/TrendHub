@@ -13,8 +13,6 @@ import javax.inject.Inject
 
 @Database(entities = [(CachedProject::class), (Config::class)], version = 1)
 abstract class ProjectsDatabase @Inject constructor(): RoomDatabase() {
-    private var INSTANCE: ProjectsDatabase? = null
-    private val lock = Any()
 
 
     abstract fun cachedProjectsDao(): CachedProjectsDao
@@ -22,18 +20,22 @@ abstract class ProjectsDatabase @Inject constructor(): RoomDatabase() {
 
     abstract fun configDao(): ConfigDao
 
+    companion object {
+        private var INSTANCE: ProjectsDatabase? = null
+        private val lock = Any()
 
-    fun getInstance(context: Context): ProjectsDatabase {
-        if (INSTANCE == null) {
-            synchronized(lock) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                            ProjectsDatabase::class.java, "projects.db")
-                            .build()
+        fun getInstance(context: Context): ProjectsDatabase {
+            if (INSTANCE == null) {
+                synchronized(lock) {
+                    if (INSTANCE == null) {
+                        INSTANCE = Room.databaseBuilder(context.applicationContext,
+                                ProjectsDatabase::class.java, "projects.db")
+                                .build()
+                    }
+                    return INSTANCE as ProjectsDatabase
                 }
-                return INSTANCE as ProjectsDatabase
             }
+            return INSTANCE as ProjectsDatabase
         }
-        return INSTANCE as ProjectsDatabase
     }
 }

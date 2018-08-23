@@ -96,4 +96,5 @@ dependencies {
 
     kaptTest mobileUiDependencies.daggerCompiler
     kaptAndroidTest mobileUiDependencies.daggerCompiler
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.2.40'
 }
