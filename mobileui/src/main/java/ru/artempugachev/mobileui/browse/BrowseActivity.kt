@@ -1,9 +1,10 @@
-package ru.artempugachev.mobileui
+package ru.artempugachev.mobileui.browse
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_browse.*
+import ru.artempugachev.mobileui.R
 
 class BrowseActivity : AppCompatActivity() {
 
