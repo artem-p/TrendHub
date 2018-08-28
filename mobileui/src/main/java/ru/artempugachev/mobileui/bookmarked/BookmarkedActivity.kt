@@ -4,23 +4,24 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_bookmarked.*
 import ru.artempugachev.mobileui.R
 import ru.artempugachev.mobileui.di.ViewModelFactory
+import ru.artempugachev.mobileui.mapper.ProjectViewMapper
 import ru.artempugachev.presentation.BrowseBookmarkedProjectsViewModel
-import ru.artempugachev.presentation.mapper.ProjectViewMapper
 import ru.artempugachev.presentation.model.ProjectView
 import ru.artempugachev.presentation.state.Resource
 import ru.artempugachev.presentation.state.ResourceState
-import kotlinx.android.synthetic.main.activity_bookmarked.*
 import javax.inject.Inject
 
 class BookmarkedActivity : AppCompatActivity() {
 
+    @Inject lateinit var adapter: BookmarkedAdapter
     @Inject lateinit var mapper: ProjectViewMapper
     @Inject lateinit var viewModelFactory: ViewModelFactory
     lateinit var browseViewModel: BrowseBookmarkedProjectsViewModel
