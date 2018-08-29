@@ -28,6 +28,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    packagingOptions {
+        exclude 'META-INF/main.kotlin_module'
+    }
 }
 
 dependencies {
